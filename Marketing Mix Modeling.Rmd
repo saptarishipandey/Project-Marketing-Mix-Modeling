@@ -1,0 +1,228 @@
+---
+title: "Marketing Mix Modeling Project"
+author: <span style = 'color:#E2E2E3'>Saptarishi Pandey</span>
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{=html}
+<style>
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #E7C664;
+    border-color: #E7C664;
+}
+a {
+    color: #9ED072;
+    text-decoration: none;
+}
+a:link {
+    color: #9ED072;
+}
+a:hover {
+    color: #E04C2B;
+}
+.list-group-item {
+    background-color: #24252A;
+    border-color: #24252A;
+}
+#TOC {
+    margin: 25px 0px 20px 0px;
+    border-radius: 3px;
+    border-color: #24252A;
+}
+  body{
+  font-family: Helvetica;
+  font-size: 12pt;
+  color:#FFFFFF;
+  background-color:#2C2E34;
+  font-variant-ligatures: no-common-ligatures;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #9ED072;
+}
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #FFFFFF;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #24252A;
+    border: 1px solid #24252A;
+    border-radius: 3px;
+}
+code, kbd, pre, samp {
+    font-family: 'Roboto mono', monospace;
+}
+.hljs-comment {
+    color: #5A6F4D;
+    font-style: italic;
+    font-weight: 600;
+}
+.hljs-keyword {
+    color: #E7C664;
+}
+.hljs-literal {
+    color: #FC5D7C;
+    font-weight: 600;
+}
+.hljs-string {
+    color: #9ED072;
+}
+.hljs-number{
+    color: #76CCE0;
+}
+pre:not([class]) {
+    background-color: #2C2E34;
+    border: 1px solid #E7C664;
+    border-radius: 3px;
+}
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #E7C664;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+.alert-question {
+    color: #E7C664;
+    background-color: #2C2E34;
+    border-color: #E7C664;
+}
+.scrollable-element {
+    margin-bottom: 20px;
+    overflow: scroll;
+    border-radius: 3px;
+    scrollbar-color: #24252A #2C2E34;
+}
+.scrollable-element::-webkit-scrollbar {
+    width: 20px;               /* width of the entire scrollbar */
+}
+
+.scrollable-element::-webkit-scrollbar-track {
+    background: #2C2E34;        /* color of the tracking area */
+}
+
+.scrollable-element::-webkit-scrollbar-thumb {
+    background-color: #9ED072;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid #2C2E34;  /* creates padding around scroll thumb */
+}
+.scrollable-element::-webkit-scrollbar-corner {
+    background-color: #2C2E34;
+}
+body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: #2C2E34;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #24252A;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid #24252A;  /* creates padding around scroll thumb */
+}
+
+</style>
+```
+
+```{r, include = F}
+library(tidyverse)
+library(corrplot)
+
+ggsonokai <- function() {
+  theme(
+    # add border 1)
+    panel.border = element_rect(colour = NA, fill = NA, linetype = 2),
+    # color background 2)
+    plot.background = element_rect(fill = "#2C2E34", color = "#2C2E34"),
+    panel.background = element_rect(fill = "#2C2E34"),
+    # modify grid 3)
+    panel.grid.major.x = element_line(colour = "white", linetype = 3, size = 0.5),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y =  element_line(colour = "white", linetype = 3, size = 0.5),
+    panel.grid.minor.y = element_blank(),
+    # modify text, axis and colour 4) and 5)
+    title = element_text(color = "#9ED072"),
+    axis.text = element_text(colour = "white", face = "bold"),
+    axis.title = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "white"),
+    # legend at the bottom 6)
+    legend.position = "bottom"
+  )
+}
+```
+
+
+------------------------------------------------------------------------
+
+*I have created this dataset using Chat GPT with the help of other marketing mix modeling data sets I found online. I also used Chat GPT to create business case for this data set to add a real world use case to it all.*
+
+------------------------------------------------------------------------
+
+::: {.alert .alert-block .alert-question}
+
+Trendify is a mid-sized fashion retailer, known for its trendy and affordable clothing lines, targeting young adults. The company operates both online and through brick-and-mortar stores across multiple regions.
+
+![](R:/Data/Users/sapta/Downloads/MS - Marketing Analytics - Class Downloads/Data Analytics Projects/Marketing Mix Modeling/Trendify.png){style="border-radius:5%; display: block; margin: 1em auto;" width="300"}
+
+Trendify has established a strong online presence and a loyal customer base. However, the fashion retail industry is highly competitive, with frequent shifts in consumer preferences.
+
+Trendify is launching new products and wants to advertise them in the second quarter of the upcoming year. To maintain and grow its market share, Trendify needs to optimize its marketing strategy, ensuring effective use of its marketing budget across various channels.
+:::
+
+
+We know that we have the data available for the sales of the past year, let's take a look at it.
+
+```{r, include = FALSE}
+mmm_data = read.csv("mmm_fashion_simulated.csv")
+mmm_data$X = NULL
+```
+
+::: scrollable-element
+```{r, echo = F}
+knitr::kable(head(mmm_data))
+```
+:::
+
+Let's quickly plot this data
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(data=mmm_data, aes(x=week, y=revenue)) +
+  geom_line(color = "#9ED072", linewidth = 1.25) +
+  labs(title = "Sales against weeks in a year",
+       y = "Revenue",
+       x = "Week") +
+  theme(plot.title = element_text(size=22)) +
+  ggsonokai()
+```
+A quick look at the correlation matrix also gives us important information about predictors of revenue.
+
+```{r, echo = FALSE}
+M = cor(mmm_data)
+colnames(M) = c("Week", "Revenue", "Newspaper Ads", "Holiday", "NY Fashion Week", " Shopping Season", "Price Change", "Search Ads", "Social Ads")
+rownames(M) = c("Week", "Revenue", "Newspaper Ads", "Holiday", "NY Fashion Week", " Shopping Season", "Price Change", "Search Ads", "Social Ads")
+par(bg = "#2C2E34")
+corrplot(M, method="color", type = "lower", tl.cex = 0.8, tl.col = "#9ED072", cl.pos = 'n', addCoef.col = 'grey50')
+```
+
