@@ -10,3 +10,9 @@ Trendify is a mid-sized fashion retailer, known for its trendy and affordable cl
 Trendify has established a strong online presence and a loyal customer base. However, the fashion retail industry is highly competitive, with frequent shifts in consumer preferences.
 
 The store is launching new products and wants to advertise them in the second quarter of the upcoming year. To maintain and grow its market share, Trendify needs to optimize its marketing strategy, ensuring effective use of its marketing budget across various channels.
+
+-----
+
+We are given with the marketing data of the business from the last year. I used ChatGPT to create dataset for me based on other marketing mix modeling projects I'd seen on the internet. 
+
+----
