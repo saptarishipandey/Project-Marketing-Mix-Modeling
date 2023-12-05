@@ -1,5 +1,7 @@
 # Project-Marketing-Mix-Modeling
 Marketing Mix Modeling for Trendify: a mid-sized fashion retailer
+![mmm_model_OLS](https://github.com/saptarishipandey/Project-Marketing-Mix-Modeling/assets/103434562/85503d4e-986c-401b-aa98-18a76a25b9ff)
+------
 
 ![Trendify](https://github.com/saptarishipandey/Project-Marketing-Mix-Modeling/assets/103434562/5b3f97c0-d895-41c1-aefe-b730f57e2db6)
 
